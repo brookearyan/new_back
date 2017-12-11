@@ -1,49 +1,50 @@
 class Api::V1::MemesController < ApplicationController
 
-  def show
-     @meme = Meme.find(params[:id])
-     respond_to do |format|
-       format.html { render :show }
-       format.json { render json: @meme}
-     end
-  end
 
-  def index
-     @notes = Note.all
-     render json: @notes
-  end
+    before_action :set_meme, only: [:show, :update, :destroy]
 
-  def new
-    @meme = Meme.new
-  end
-
-  def create
-    @meme = Meme.new(meme_params)
-    if @meme.save
-      redirect_to meme
-    else
-      render 'new'
+    def index
+      render json: Meme.all
     end
-  end
 
-  def edit
-    @meme = Meme.find(params[:id])
-  end
-
-  def update
-    @meme = Meme.find(params[:id])
-    if @meme.update_attributes(meme_params)
-      redirect_to @meme
-    else
-      render 'edit'
+    def create
+      meme = Meme.new(meme_params)
+      if meme.save
+        render json: meme
+      else
+        render json: { message: meme.errors }, status: 400
+      end
     end
-  end
 
-  private
+    def show
+      render json: @meme
+    end
 
-  def meme_params
-    params.require(:meme).permit(:id, :alias, :one, :two, :three, :four, :five)
-  end
+    def update
+      if @meme.update(meme_params)
+        render json: @meme
+      else
+        render json: { message: @meme.errors }, status: 400
+      end
+    end
+
+    def destroy
+      if @meme.destroy
+        render status: 204
+      else
+        render json: { message: "Unable to remove this meme" }, status: 400
+      end
+    end
+
+    private
+
+      def set_meme
+        @meme = Meme.find_by(id: params[:id])
+      end
+
+      def meme_params
+        params.require(:meme).permit(:alias, :one, :two, :three, :four, :five)
+      end
 
 
 end

@@ -1,6 +1,5 @@
 class Api::V1::MemesController < ApplicationController
 
-
     before_action :set_meme, only: [:show, :update, :destroy]
 
     def index
@@ -8,12 +7,9 @@ class Api::V1::MemesController < ApplicationController
     end
 
     def create
-      meme = Meme.new(meme_params)
-      if meme.save
-        render json: meme
-      else
-        render json: { message: meme.errors }, status: 400
-      end
+      @meme = Meme.new(meme_params)
+      @meme.save
+      render json: @meme
     end
 
     def show
@@ -21,11 +17,8 @@ class Api::V1::MemesController < ApplicationController
     end
 
     def update
-      if @meme.update(meme_params)
+      @meme.update(meme_params[:id])
         render json: @meme
-      else
-        render json: { message: @meme.errors }, status: 400
-      end
     end
 
     def destroy
@@ -39,11 +32,11 @@ class Api::V1::MemesController < ApplicationController
     private
 
       def set_meme
-        @meme = Meme.find_by(id: params[:id])
+        @meme = Meme.find_by(params[:id])
       end
 
       def meme_params
-        params.require(:meme).permit(:alias, :one, :two, :three, :four, :five)
+        params.permit(:alias, :one, :two, :three, :four, :five)
       end
 
 

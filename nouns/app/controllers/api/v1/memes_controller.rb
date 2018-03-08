@@ -8,7 +8,6 @@ class Api::V1::MemesController < ApplicationController
     def new
       @meme = Meme.new
       render json: meme
-
     end
 
     def create
@@ -22,6 +21,16 @@ class Api::V1::MemesController < ApplicationController
         created_at: params[:created_at],
         likes: params[:likes]
       )
+      render json: @meme
+    end
+
+    def edit
+      @meme = Meme.find(params[:id])
+    end
+    
+    def update
+      @meme = Meme.find(params[:id])
+      @meme.update(likes: params[:likes])
       render json: @meme
     end
 

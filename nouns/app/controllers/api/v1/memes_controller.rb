@@ -1,4 +1,5 @@
 class Api::V1::MemesController < ApplicationController
+  has_many :likes
 
     def index
       @memes = Meme.all
@@ -27,7 +28,7 @@ class Api::V1::MemesController < ApplicationController
     def edit
       @meme = Meme.find(params[:id])
     end
-    
+
     def update
       @meme = Meme.find(params[:id])
       @meme.update(likes: params[:likes])

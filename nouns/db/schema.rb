@@ -10,10 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180227235250) do
+ActiveRecord::Schema.define(version: 20180309182442) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "likes", force: :cascade do |t|
+    t.integer "meme_id"
+  end
 
   create_table "memes", force: :cascade do |t|
     t.string "alias"
@@ -24,7 +28,6 @@ ActiveRecord::Schema.define(version: 20180227235250) do
     t.string "five"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "likes"
   end
 
 end

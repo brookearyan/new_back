@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 20180309182442) do
 
   create_table "likes", force: :cascade do |t|
     t.integer "meme_id"
+    t.index ["meme_id"], name: "index_likes_on_meme_id"
   end
 
   create_table "memes", force: :cascade do |t|

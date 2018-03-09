@@ -1,5 +1,4 @@
 class Api::V1::LikesController < ApplicationController
-  belongs_to :like
 
   def index
     @likes = Like.all
@@ -21,7 +20,7 @@ class Api::V1::LikesController < ApplicationController
     @like = Like.find(params[:id])
     respond_to do |format|
       format.html { render :show }
-      format.json { render json: @like}
+      format.json { render json: @like }
     end
   end
 

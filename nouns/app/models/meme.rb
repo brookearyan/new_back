@@ -4,4 +4,5 @@ class Meme < ApplicationRecord
   def self.likes
     @likes = Like.all.select { |like| like.meme_id == @meme.id }
   end
+
 end

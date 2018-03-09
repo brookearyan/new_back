@@ -1,5 +1,4 @@
 class Api::V1::MemesController < ApplicationController
-  has_many :likes
 
     def index
       @memes = Meme.all
@@ -19,12 +18,11 @@ class Api::V1::MemesController < ApplicationController
         three: params[:three],
         four: params[:four],
         five: params[:five],
-        created_at: params[:created_at],
-        likes: params[:likes]
-      )
+        created_at: params[:created_at]
+        )
       render json: @meme
     end
-
+    
     def edit
       @meme = Meme.find(params[:id])
     end

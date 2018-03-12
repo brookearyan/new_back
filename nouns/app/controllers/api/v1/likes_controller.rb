@@ -10,10 +10,9 @@ class Api::V1::LikesController < ApplicationController
   end
 
   def create
-    @like = Like.create(
-      meme_id: params[:meme_id]
-    )
-    render json: @like
+    @meme = Meme.find(params[:meme_id])
+    @like = @meme.likes.create
+    render json: @meme
   end
 
   def show
